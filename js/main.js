@@ -1,2 +1,2 @@
-import { arrayObjects } from './data';
+import { photos } from './data';
 
