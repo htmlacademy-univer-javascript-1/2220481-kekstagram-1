@@ -1,4 +1,4 @@
-import { randomNumber } from './utils';
+import { randomNumber } from './utils.js';
 
 const COUNT_OBJECT = 25;
 
