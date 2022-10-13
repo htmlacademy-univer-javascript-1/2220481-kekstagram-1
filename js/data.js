@@ -1,4 +1,4 @@
-import { randomNumber } from './utils';
+import { randomNumber } from './utils.js';
 
 const COUNT_OBJECT = 25;
 
@@ -23,7 +23,7 @@ const DESCRIPTIONS = [
   'Как вам фото с новой камеры?'
 ];
 
-const arrayObjects = [];
+const photos = [];
 
 
 const commentsArray= (count) => {
@@ -41,7 +41,7 @@ const commentsArray= (count) => {
 
 const addPhotos = () => {
   for(let i = 0; i < COUNT_OBJECT; i++){
-    arrayObjects[i] = {
+    photos[i] = {
       id: i,
       url: `photos/${i + 1}.jpg`,
       description: DESCRIPTIONS[randomNumber(0, DESCRIPTIONS.length - 1)],
@@ -53,4 +53,4 @@ const addPhotos = () => {
 
 addPhotos();
 
-export {arrayObjects};
+export {photos};
