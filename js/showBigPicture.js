@@ -50,7 +50,7 @@ closeButton.addEventListener('click', ()=> {
 });
 
 const onDocumentEscKeyDown = (evt) => {
-  if(evt.key === 'Escape'){
+  if(evt.key === 'Escape' && !evt.target.classList.contains('big-picture')){
     popup.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
 
