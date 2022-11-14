@@ -20,6 +20,8 @@ const onDocumentEscKeyDown = (evt) => {
     document.removeEventListener('keydown', onDocumentEscKeyDown);
   }
 };
+
+
 document.addEventListener('keydown', onDocumentEscKeyDown);
 
 
