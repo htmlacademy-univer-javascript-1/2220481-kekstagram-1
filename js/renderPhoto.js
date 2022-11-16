@@ -1,5 +1,5 @@
 import {photos} from './data.js';
-
+import { showBigPictures } from './showBigPicture.js';
 const picture = document.querySelector('.pictures');
 
 const template = document.querySelector('#picture').content;
@@ -18,6 +18,12 @@ const renderPhoto = (photo) => {
 
   const comments = item.querySelector('.picture__comments');
   comments.textContent = photo.comments.length;
+
+  item.addEventListener('click', (evt) =>{
+    evt.preventDefault();
+    showBigPictures(photo);
+  });
+
   return item;
 };
 
