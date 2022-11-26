@@ -3,7 +3,7 @@ import { imageUpload } from './formUpload.js';
 const SCALING_STEP = 0.25;
 const MAX_SCALING = 1;
 const MIN_SCALING = 0.25;
-const START_SCALING = 0.5;
+const START_SCALING = 1;
 
 let scaling = START_SCALING;
 

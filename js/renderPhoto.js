@@ -1,4 +1,3 @@
-import {photos} from './data.js';
 import { showBigPictures } from './showBigPicture.js';
 const picture = document.querySelector('.pictures');
 
@@ -27,11 +26,11 @@ const renderPhoto = (photo) => {
   return item;
 };
 
-const renderPhotos = () => {
+const renderPhotos = (photos) => {
   photos.forEach((photo) => {
     newFragment.appendChild(renderPhoto(photo));
   });
   picture.appendChild(newFragment);
 };
 
-renderPhotos();
+export {renderPhotos};

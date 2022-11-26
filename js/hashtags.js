@@ -1,8 +1,17 @@
+import {sendRequest } from './serverWork.js';
+import {showAlert} from './utils.js';
+import { isEscape } from './utils.js';
 const MAX_SYMBOLS = 20;
 const MAX_HASHTAGS = 5;
 
+
 const form = document.querySelector('.img-upload__form');
 const button = document.querySelector('.img-upload__submit');
+const successMessage = document.querySelector('#success').content.querySelector('.success');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const newFragment = document.createDocumentFragment();
+const mes = document.querySelector('.message');
+
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__item',
@@ -15,11 +24,11 @@ const pristine = new Pristine(form, {
 
 const hashtags = document.querySelector('.text__hashtags');
 
-let errorMessage = '';
-const error = () => errorMessage;
+let errorMessages = '';
+const error = () => errorMessages;
 
 const hashtagsHandler = (value) => {
-  errorMessage = '';
+  errorMessages = '';
   const text = value.toLowerCase().trim();
   if (!text){
     return true;
@@ -60,7 +69,7 @@ const hashtagsHandler = (value) => {
   return rules.every((rule) =>{
     const isInvalid = rule.check;
     if(isInvalid){
-      errorMessage = rule.error;
+      errorMessages = rule.error;
     }
     return !isInvalid;
   });
@@ -77,8 +86,75 @@ hashtags.addEventListener('input', () => {
     button.disabled = true;
   }
 });
+
+const removeMessage = () => {
+  if(mes.querySelector('.success')){
+    mes.querySelector('.success').remove();
+  }
+  if(mes.querySelector('.error')){
+    document.querySelector('.error_message').remove();
+  }
+};
+
+const onEscapeMes = (evt) => {
+  if(isEscape(evt)) {
+    removeMessage();
+    document.removeEventListener('keydown', onEscapeMes);
+  }
+};
+
+const onWindowClick = (evt) =>{
+  const windowMes = mes.querySelector('.success__inner');
+  const withinBoundaries = evt.composedPath().includes(windowMes);
+
+  if(!withinBoundaries){
+    removeMessage();
+    document.removeEventListener('keydown', onWindowClick);
+  }
+};
+const doSuccessMessage = () => {
+  const message = successMessage.cloneNode(true);
+  newFragment.append(message);
+  mes.append(newFragment);
+
+  const but = mes.querySelector('.success__button');
+  but.addEventListener('click', removeMessage);
+};
+
+const doErrorMessage = () => {
+  const message = errorMessage.cloneNode(true);
+  newFragment.append(message);
+  mes.append(newFragment);
+
+  const but = mes.querySelector('.error__button');
+  but.addEventListener('click', removeMessage);
+};
+
+const doMessage = (createMes) =>{
+  document.querySelector('.img-upload__overlay').classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+
+  createMes();
+
+  document.addEventListener('keydown', onEscapeMes);
+  document.addEventListener('click', onWindowClick);
+};
+
+const onSuccess = () => {
+  button.disabled = false;
+  doMessage(doSuccessMessage);
+};
+
+const onFail = (err) =>{
+  showAlert(err);
+  doMessage(doErrorMessage);
+};
+
+const method = 'POST';
+
+
 form.addEventListener('submit', (evt) =>{
   evt.preventDefault();
-
-  pristine.validate();
+  button.disabled = true;
+  sendRequest(onSuccess, onFail, method,new FormData(form) );
 });
