@@ -1,49 +1,47 @@
 import { imageUpload } from './formUpload.js';
 
-const SCALING_STEP = 0.25;
-const MAX_SCALING = 1;
-const MIN_SCALING = 0.25;
-const START_SCALING = 1;
+const Scale = {
+  STEP: 0.25,
+  MAX: 1,
+  MIN: 0.25,
+  START: 1,
+};
 
-let scaling = START_SCALING;
+let scaling = Scale.START;
 
-
-const buttons = document.querySelector('.img-upload__scale');
-const scaleValue = document.querySelector('.scale__control--value');
+const form = document.querySelector('.img-upload__form');
+const buttons = form.querySelector('.img-upload__scale');
+const scaleValue = form.querySelector('.scale__control--value');
 
 
 const reValue = () => {
   scaling = scaleValue.value.replace('%', '')/100;
 
-  if(scaling <= MAX_SCALING && scaling >= MIN_SCALING){
+  if(scaling <= Scale.MAX && scaling >=  Scale.MIN){
     imageUpload.style.transform = `scale(${scaling.toFixed(2)})`;
   }
 };
 
-const doScaling =(evt) => {
+const onButtonClickScaling =(evt) => {
   const targetImage = evt.target;
   imageUpload.style.transform = `scale(${scaling})`;
 
   let mode = 0;
 
-  if (targetImage.classList.contains('scale__control--smaller')){
-    if(scaling !== MIN_SCALING){
-      mode = -1;
-    }
+  if (targetImage.classList.contains('scale__control--smaller' && scaling !==  Scale.MIN)){
+    mode = -1;
   }
-  if (targetImage.classList.contains('scale__control--bigger')){
-    if(scaling !== MAX_SCALING){
-      mode = 1;
-    }
+  if (targetImage.classList.contains('scale__control--bigger' && scaling !== Scale.MAX)){
+    mode = 1;
   }
 
 
-  scaling = scaling + SCALING_STEP * mode;
-  if(scaling > MAX_SCALING){
-    scaling = MAX_SCALING;
+  scaling = scaling + Scale.STEP * mode;
+  if(scaling > Scale.MAX){
+    scaling = Scale.MAX;
   }
-  if(scaling < MIN_SCALING){
-    scaling = MIN_SCALING;
+  if(scaling <  Scale.MIN){
+    scaling =  Scale.MIN;
   }
 
   imageUpload.style.transform = `scale(${scaling.toFixed(2)})`;
@@ -51,14 +49,14 @@ const doScaling =(evt) => {
 };
 
 const scalingPhotos =()=>{
-  buttons.addEventListener('click',doScaling);
+  buttons.addEventListener('click',onButtonClickScaling);
   scaleValue.addEventListener('change', reValue);
-  scaleValue.value = `${START_SCALING * 100  }%`;
-  imageUpload.style.transform = `scale(${START_SCALING})`;
+  scaleValue.value = `${Scale.START * 100  }%`;
+  imageUpload.style.transform = `scale(${Scale.START})`;
 };
 const restart = () => {
-  buttons.removeEventListener('click',doScaling);
-  scaling = START_SCALING;
+  buttons.removeEventListener('click',onButtonClickScaling);
+  scaling = Scale.START;
 };
 
 
