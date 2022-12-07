@@ -75,7 +75,6 @@ const reSlider = (effect) =>{
 const takeEffect = (effect) =>{
   imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   imageUpload.classList.add(`effects__preview--${effect}`);
-  nowEffect = effect;
 
   if (effect === 'none'){
     slider.disabled = false;
@@ -83,6 +82,7 @@ const takeEffect = (effect) =>{
     imageUpload.style.filter = '';
   }
   else{
+    nowEffect = effect;
     slider.removeAttribute('disabled');
     slider.classList.remove('hidden');
     reSlider(effect);
@@ -90,14 +90,14 @@ const takeEffect = (effect) =>{
 };
 
 const onClickEffectsAddEffect = (evt) =>{
-  const targetEffect = evt.target;
-  if(targetEffect.name === 'effect'){
-    takeEffect(targetEffect.value);
+  if(evt.target.name === 'effect'){
+    takeEffect(evt.target.value);
   }
 };
 const restartEffects = () => {
+  slider.classList.add('hidden');
   effects.removeEventListener('click',onClickEffectsAddEffect);
-  imageUpload.classList.remove(`effects__preview--${nowEffect}`);
+  imageUpload.removeAttribute('class');
   slider.noUiSlider.updateOptions({
     range: {
       min: 0,
@@ -107,7 +107,7 @@ const restartEffects = () => {
     step: 1,
     connect: 'lower',
   });
-  slider.disabled = true;
+  takeEffect('none');
 };
 
 const onChangeFormEffects = () =>{

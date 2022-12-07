@@ -16,7 +16,6 @@ const scaleValue = form.querySelector('.scale__control--value');
 
 const reValue = () => {
   scaling = scaleValue.value.replace('%', '')/100;
-
   if(scaling <= Scale.MAX && scaling >=  Scale.MIN){
     imageUpload.style.transform = `scale(${scaling.toFixed(2)})`;
   }
@@ -28,10 +27,10 @@ const onButtonClickScaling =(evt) => {
 
   let mode = 0;
 
-  if (targetImage.classList.contains('scale__control--smaller' && scaling !==  Scale.MIN)){
+  if (targetImage.classList.contains('scale__control--smaller' )){
     mode = -1;
   }
-  if (targetImage.classList.contains('scale__control--bigger' && scaling !== Scale.MAX)){
+  if (targetImage.classList.contains('scale__control--bigger')){
     mode = 1;
   }
 
@@ -43,7 +42,6 @@ const onButtonClickScaling =(evt) => {
   if(scaling <  Scale.MIN){
     scaling =  Scale.MIN;
   }
-
   imageUpload.style.transform = `scale(${scaling.toFixed(2)})`;
   scaleValue.value = `${scaling.toFixed(2) * 100  }%`;
 };

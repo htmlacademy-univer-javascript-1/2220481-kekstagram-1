@@ -13,12 +13,15 @@ file.addEventListener('change',  () => {
   onChangeFormEffects();
 });
 
-buttonCancel.addEventListener('click', () => {
+const restartForm = () =>{
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   restart();
   restartEffects();
-});
+};
+
+buttonCancel.addEventListener('click', restartForm);
+
 const onDocumentEscKeyDown = (evt) => {
   if(isEscape(evt) && !evt.target.classList.contains('text__description') && !evt.target.classList.contains('text__hashtags')){
     document.querySelector('.img-upload__overlay').classList.add('hidden');
@@ -31,5 +34,5 @@ const onDocumentEscKeyDown = (evt) => {
 
 
 document.addEventListener('keydown', onDocumentEscKeyDown);
-export {imageUpload};
+export {imageUpload, restartForm};
 

@@ -1,6 +1,7 @@
 import {sendRequest } from './serverWork.js';
 import {showAlert} from './utils.js';
 import { isEscape } from './utils.js';
+import {restartForm} from './formUpload.js';
 const MAX_SYMBOLS = 20;
 const MAX_HASHTAGS = 5;
 
@@ -85,10 +86,12 @@ hashtags.addEventListener('input', () => {
 const removeMessage = () => {
   if(mes.querySelector('.success')){
     mes.querySelector('.success').remove();
+    restartForm();
   }
   if(mes.querySelector('.error')){
     document.querySelector('.error_message').remove();
   }
+
 };
 
 const onEscapeMes = (evt) => {
