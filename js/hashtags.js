@@ -107,7 +107,7 @@ const onWindowClick = (evt) =>{
 
   if(!withinBoundaries){
     removeMessage();
-    document.removeEventListener('keydown', onWindowClick);
+    document.removeEventListener('click', onWindowClick);
   }
 };
 const doSuccessMessage = () => {

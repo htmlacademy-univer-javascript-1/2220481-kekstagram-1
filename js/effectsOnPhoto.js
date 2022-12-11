@@ -75,7 +75,6 @@ const reSlider = (effect) =>{
 const takeEffect = (effect) =>{
   imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   imageUpload.classList.add(`effects__preview--${effect}`);
-
   if (effect === 'none'){
     slider.disabled = false;
     slider.classList.add('hidden');
@@ -95,9 +94,10 @@ const onClickEffectsAddEffect = (evt) =>{
   }
 };
 const restartEffects = () => {
+  imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   slider.classList.add('hidden');
   effects.removeEventListener('click',onClickEffectsAddEffect);
-  imageUpload.removeAttribute('class');
+
   slider.noUiSlider.updateOptions({
     range: {
       min: 0,

@@ -5,13 +5,17 @@ import './hashtags.js';
 import './scallngPhoto.js';
 import './effectsOnPhoto.js';
 import './serverWork.js';
-
+import './filterPhotos.js';
+import './uploadUserPhoto.js';
 import {renderPhotos} from './renderPhoto.js';
 import {sendRequest } from './serverWork.js';
 import {showAlert} from './utils.js';
+import { aboba } from './filterPhotos.js';
 
 const onSuccess = (data) => {
   renderPhotos(data);
+  aboba(data);
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
 const onFail = (error) =>{
@@ -21,3 +25,4 @@ const onFail = (error) =>{
 const method = 'GET';
 
 sendRequest(onSuccess, onFail, method);
+

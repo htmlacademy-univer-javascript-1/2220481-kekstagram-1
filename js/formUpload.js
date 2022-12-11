@@ -24,11 +24,8 @@ buttonCancel.addEventListener('click', restartForm);
 
 const onDocumentEscKeyDown = (evt) => {
   if(isEscape(evt) && !evt.target.classList.contains('text__description') && !evt.target.classList.contains('text__hashtags')){
-    document.querySelector('.img-upload__overlay').classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
+    restartForm();
     document.removeEventListener('keydown', onDocumentEscKeyDown);
-    restart();
-    restartEffects();
   }
 };
 
