@@ -19,7 +19,7 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-slider.setAttribute('disabled', true);
+slider.disabled = true;
 
 
 const reSlider = (effect) =>{
@@ -28,32 +28,36 @@ const reSlider = (effect) =>{
   let stepValue = 0.1;
   let nameOfEffect = '';
   let type = '';
-  if(effect === 'chrome'){
-    nameOfEffect = 'grayscale';
+
+  switch(effect){
+    case 'chrome':
+      nameOfEffect = 'grayscale';
+      break;
+    case 'sepia':
+      nameOfEffect = 'sepia';
+      break;
+    case 'marvin':
+      maxValue = 100;
+      minValue = 0;
+      stepValue = 1;
+      type = '%';
+      nameOfEffect = 'invert';
+      break;
+    case 'phobos':
+      maxValue = 3;
+      minValue = 0;
+      stepValue = 0.1;
+      type = 'px';
+      nameOfEffect = 'blur';
+      break;
+    case 'heat':
+      maxValue = 3;
+      minValue = 1;
+      stepValue = 0.1;
+      nameOfEffect = 'brightness';
+      break;
   }
-  if(effect === 'sepia'){
-    nameOfEffect = 'sepia';
-  }
-  if(effect === 'marvin'){
-    maxValue = 100;
-    minValue = 0;
-    stepValue = 1;
-    type = '%';
-    nameOfEffect = 'invert';
-  }
-  if(effect === 'phobos'){
-    maxValue = 3;
-    minValue = 0;
-    stepValue = 0.1;
-    type = 'px';
-    nameOfEffect = 'blur';
-  }
-  if(effect === 'heat'){
-    maxValue = 3;
-    minValue = 1;
-    stepValue = 0.1;
-    nameOfEffect = 'brightness';
-  }
+
 
   slider.noUiSlider.updateOptions({
     range: {
@@ -62,17 +66,6 @@ const reSlider = (effect) =>{
     },
     start: maxValue,
     step: stepValue,
-    format: {
-      to: function (value) {
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
-      },
-      from: function (value) {
-        return parseFloat(value);
-      },
-    },
   });
   slider.noUiSlider.on('update', () =>{
     imageUpload.style.filter = `${nameOfEffect}(${slider.noUiSlider.get()}${type})`;
@@ -82,27 +75,29 @@ const reSlider = (effect) =>{
 const takeEffect = (effect) =>{
   imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   imageUpload.classList.add(`effects__preview--${effect}`);
-  nowEffect = effect;
 
   if (effect === 'none'){
-    slider.setAttribute('disabled',false);
+    slider.disabled = false;
+    slider.classList.add('hidden');
     imageUpload.style.filter = '';
   }
   else{
+    nowEffect = effect;
     slider.removeAttribute('disabled');
+    slider.classList.remove('hidden');
     reSlider(effect);
   }
 };
 
-const addEffect = (evt) =>{
-  const targetEffect = evt.target;
-  if(targetEffect.name === 'effect'){
-    takeEffect(targetEffect.value);
+const onClickEffectsAddEffect = (evt) =>{
+  if(evt.target.name === 'effect'){
+    takeEffect(evt.target.value);
   }
 };
 const restartEffects = () => {
-  effects.removeEventListener('click',addEffect);
-  imageUpload.classList.remove(`effects__preview--${nowEffect}`);
+  slider.classList.add('hidden');
+  effects.removeEventListener('click',onClickEffectsAddEffect);
+  imageUpload.removeAttribute('class');
   slider.noUiSlider.updateOptions({
     range: {
       min: 0,
@@ -112,12 +107,12 @@ const restartEffects = () => {
     step: 1,
     connect: 'lower',
   });
-  slider.setAttribute('disabled', true);
+  takeEffect('none');
 };
 
-const doEffects = () =>{
+const onChangeFormEffects = () =>{
   imageUpload.style.filter = '';
-  effects.addEventListener('click', addEffect);
+  effects.addEventListener('click', onClickEffectsAddEffect);
 };
-export {doEffects, restartEffects};
+export {onChangeFormEffects, restartEffects};
 
