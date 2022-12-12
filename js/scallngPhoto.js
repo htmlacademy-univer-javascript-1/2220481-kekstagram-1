@@ -49,8 +49,8 @@ const onButtonClickScaling =(evt) => {
 const scalingPhotos =()=>{
   buttons.addEventListener('click',onButtonClickScaling);
   scaleValue.addEventListener('change', reValue);
-  scaleValue.value = `${Scale.START * 100  }%`;
-  imageUpload.style.transform = `scale(${Scale.START})`;
+  scaleValue.value = `${scaling* 100  }%`;
+  imageUpload.style.transform = `scale(${scaling})`;
 };
 const restart = () => {
   buttons.removeEventListener('click',onButtonClickScaling);

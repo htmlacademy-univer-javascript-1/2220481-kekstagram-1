@@ -94,6 +94,7 @@ const onClickEffectsAddEffect = (evt) =>{
   }
 };
 const restartEffects = () => {
+  document.querySelector('.img-upload__form').reset();
   imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   slider.classList.add('hidden');
   effects.removeEventListener('click',onClickEffectsAddEffect);
@@ -107,7 +108,6 @@ const restartEffects = () => {
     step: 1,
     connect: 'lower',
   });
-  takeEffect('none');
 };
 
 const onChangeFormEffects = () =>{

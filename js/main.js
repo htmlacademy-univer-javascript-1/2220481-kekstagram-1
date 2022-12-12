@@ -10,11 +10,11 @@ import './uploadUserPhoto.js';
 import {renderPhotos} from './renderPhoto.js';
 import {sendRequest } from './serverWork.js';
 import {showAlert} from './utils.js';
-import { aboba } from './filterPhotos.js';
+import { getPhotos } from './filterPhotos.js';
 
 const onSuccess = (data) => {
   renderPhotos(data);
-  aboba(data);
+  getPhotos(data);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 

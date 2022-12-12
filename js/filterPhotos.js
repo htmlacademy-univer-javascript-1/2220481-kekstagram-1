@@ -6,7 +6,7 @@ const COUNT_COMMENTS = 10;
 const formFilters = document.querySelector('.img-filters__form');
 
 let data;
-const aboba = (d) => {
+const getPhotos = (d) => {
   data = d;
 };
 const filters = {
@@ -30,4 +30,4 @@ const onClickFilter =debounce((evt) =>{
 
 formFilters.addEventListener('click', onClickFilter);
 
-export {aboba};
+export {getPhotos};
