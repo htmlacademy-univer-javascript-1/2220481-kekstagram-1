@@ -22,6 +22,7 @@ const onDocumentEscKeyDown = (evt) => {
     popup.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', onDocumentEscKeyDown);
+    currentCount = COMMENTS_COUNT;
   }
 };
 
