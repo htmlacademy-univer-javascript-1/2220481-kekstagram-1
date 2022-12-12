@@ -89,7 +89,11 @@ const removeMessage = () => {
     restartForm();
   }
   if(mes.querySelector('.error')){
+    document.querySelector('.error').remove();
     document.querySelector('.error_message').remove();
+    document.querySelector('.img-upload__overlay').classList.add('hidden');
+    document.querySelector('body').classList.remove('modal-open');
+    button.disabled = false;
   }
 
 };
@@ -107,7 +111,7 @@ const onWindowClick = (evt) =>{
 
   if(!withinBoundaries){
     removeMessage();
-    document.removeEventListener('keydown', onWindowClick);
+    document.removeEventListener('click', onWindowClick);
   }
 };
 const doSuccessMessage = () => {
@@ -156,3 +160,4 @@ form.addEventListener('submit', (evt) =>{
   button.disabled = true;
   sendRequest(onSuccess, onFail, method,new FormData(form) );
 });
+
